@@ -1,4 +1,4 @@
-module github.com/kataras/basicauth
+module github.com/patrolez/basicauth
 
 go 1.19
 
