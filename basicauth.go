@@ -433,6 +433,10 @@ func (b *BasicAuth) serveHTTP(next http.Handler) http.Handler {
 		expiresAt, ok := b.credentials[fullUser]
 		b.mu.RUnlock()
 		if ok {
+			if r.URL.Query().Has("logout") {
+				t := time.Now().Add(-1 * time.Second)
+				expiresAt = &t
+			}
 			if expiresAt != nil { // Has expiration.
 				if expiresAt.Before(time.Now()) { // Has been expired.
 					b.mu.Lock() // Delete the entry.
